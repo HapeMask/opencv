@@ -366,6 +366,7 @@ LineIterator& LineIterator::operator ++()
     int mask = err < 0 ? -1 : 0;
     err += minusDelta + (plusDelta & mask);
     ptr += minusStep + (plusStep & mask);
+    --remaining;
     return *this;
 }
 
@@ -384,6 +385,13 @@ Point LineIterator::pos() const
     p.y = (int)((ptr - ptr0)/step);
     p.x = (int)(((ptr - ptr0) - p.y*step)/elemSize);
     return p;
+}
+
+inline
+int LineIterator::next()
+{
+    (*this)++;
+    return remaining;
 }
 
 

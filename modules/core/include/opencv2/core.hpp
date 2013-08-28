@@ -745,11 +745,11 @@ public:
    The class is used to iterate over all the pixels on the raster line
    segment connecting two specified points.
 */
-class CV_EXPORTS LineIterator
+class CV_EXPORTS_W LineIterator
 {
 public:
     //! intializes the iterator
-    LineIterator( const Mat& img, Point pt1, Point pt2,
+    CV_WRAP LineIterator( const Mat& img, Point pt1, Point pt2,
                   int connectivity = 8, bool leftToRight = false );
     //! returns pointer to the current pixel
     uchar* operator *();
@@ -758,12 +758,14 @@ public:
     //! postfix increment operator (it++). shifts iterator to the next pixel
     LineIterator operator ++(int);
     //! returns coordinates of the current pixel
-    Point pos() const;
+    CV_WRAP Point pos() const;
+
+    CV_WRAP int next();
 
     uchar* ptr;
     const uchar* ptr0;
     int step, elemSize;
-    int err, count;
+    int err, count, remaining;
     int minusDelta, plusDelta;
     int minusStep, plusStep;
 };
